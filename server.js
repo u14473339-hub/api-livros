@@ -36,6 +36,16 @@ async function iniciarServidor() {
 
     res.json(resultado);
 });
+
+app.delete('/livros/:id', async (req, res) => {
+    const id = req.params.id;
+
+    const resultado = await livros.deleteOne(
+        { _id: new ObjectId(id) }
+    );
+
+    res.json(resultado);
+});
         app.listen(3000, () => {
             console.log('Servidor funcionando!');
         });

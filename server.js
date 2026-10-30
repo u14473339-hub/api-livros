@@ -80,6 +80,53 @@ async function iniciarServidor() {
             }
         });
 
+        app.put('/usuarios/:id', async (req, res) => {
+            try {
+                const id = req.params.id;
+                const { nome, email } = req.body;
+
+                if (!ObjectId.isValid(id)) {
+                    return res.status(400).json({
+                        mensagem: 'ID inválido.'
+                    });
+                }
+
+                if (!nome && !email) {
+                    return res.status(400).json({
+                        mensagem: 'Informe o nome ou o email para atualizar.'
+                    });
+                }
+
+                const resultado = await usuarios.updateOne(
+                    { _id: new ObjectId(id) },
+                    { $set: { ...(nome && { nome }), ...(email && { email }) } }
+                );
+
+                if (resultado.matchedCount === 0) {
+                    return res.status(404).json({
+                        mensagem: 'Usuário não encontrado.'
+                    });
+                }
+
+                res.json({
+                    mensagem: 'Usuário atualizado com sucesso!'
+                });
+
+            } catch (erro) {
+                console.error(erro);
+
+                if (erro.code === 11000) {
+                    return res.status(409).json({
+                        mensagem: 'Este email já está cadastrado.'
+                    });
+                }
+
+                res.status(500).json({
+                    mensagem: 'Erro ao atualizar usuário.'
+                });
+            }
+        });
+
         app.get('/livros', async (req, res) => {
     const resultado = await livros.find().toArray();
 

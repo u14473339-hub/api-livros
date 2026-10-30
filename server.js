@@ -57,12 +57,35 @@ async function iniciarServidor() {
         });
     }
 });
+ app.get('/livros', async (req, res) => {
+    const resultado = await livros.find().toArray();
+
+    res.json(resultado);
+});
+        
+        app.get('/usuarios', async (req, res) => {
+            try {
+                const resultado = await usuarios.find(
+                    {},
+                    { projection: { senha: 0 } }
+                ).toArray();
+
+                res.json(resultado);
+
+            } catch (erro) {
+                console.error(erro);
+                res.status(500).json({
+                    mensagem: 'Erro ao listar usuários.'
+                });
+            }
+        });
 
         app.get('/livros', async (req, res) => {
     const resultado = await livros.find().toArray();
 
     res.json(resultado);
 });
+
 
         app.post('/livros', async (req, res) => {
     const novoLivro = req.body;

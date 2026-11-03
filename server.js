@@ -126,6 +126,38 @@ async function iniciarServidor() {
                 });
             }
         });
+         app.delete('/usuarios/:id', async (req, res) => {
+            try {
+                const id = req.params.id;
+
+                if (!ObjectId.isValid(id)) {
+                    return res.status(400).json({
+                        mensagem: 'ID inválido.'
+                    });
+                }
+
+                const resultado = await usuarios.deleteOne({
+                    _id: new ObjectId(id)
+                });
+
+                if (resultado.deletedCount === 0) {
+                    return res.status(404).json({
+                        mensagem: 'Usuário não encontrado.'
+                    });
+                }
+
+                res.json({
+                    mensagem: 'Usuário excluído com sucesso!'
+                });
+
+            } catch (erro) {
+                console.error(erro);
+                res.status(500).json({
+                    mensagem: 'Erro ao excluir usuário.'
+                });
+            }
+        });
+
 
         app.get('/livros', async (req, res) => {
     const resultado = await livros.find().toArray();

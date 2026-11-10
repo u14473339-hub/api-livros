@@ -10,6 +10,28 @@ const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db('api-livros');
 const livros = db.collection('livros');
 const usuarios = db.collection('usuarios');
+function autenticarToken(req, res, next) {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({
+            mensagem: 'Token não fornecido.'
+        });
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    jwt.verify(token, process.env.JWT_SECRET, (erro, usuario) => {
+        if (erro) {
+            return res.status(403).json({
+                mensagem: 'Token inválido ou expirado.'
+            });
+        }
+
+        req.usuario = usuario;
+        next();
+    });
+}
 async function iniciarServidor() {
     try {
         await client.connect();
@@ -57,7 +79,7 @@ async function iniciarServidor() {
         });
     }
 });
- app.get('/livros', async (req, res) => {
+ app.get('/livros', autenticarToken, async (req, res) => {
     const resultado = await livros.find().toArray();
 
     res.json(resultado);
@@ -157,24 +179,66 @@ async function iniciarServidor() {
                 });
             }
         });
+app.post('/login', async (req, res) => {
+    try {
+        const { email, senha } = req.body;
 
+        if (!email || !senha) {
+            return res.status(400).json({
+                mensagem: 'Informe email e senha.'
+            });
+        }
 
-        app.get('/livros', async (req, res) => {
-    const resultado = await livros.find().toArray();
+        const usuario = await usuarios.findOne({ email });
 
-    res.json(resultado);
+        if (!usuario) {
+            return res.status(401).json({
+                mensagem: 'Email ou senha incorretos.'
+            });
+        }
+
+        const senhaCorreta = await bcrypt.compare(
+            senha,
+            usuario.senha
+        );
+
+        if (!senhaCorreta) {
+            return res.status(401).json({
+                mensagem: 'Email ou senha incorretos.'
+            });
+        }
+
+        const token = jwt.sign(
+            { id: usuario._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.json({
+            mensagem: 'Login realizado com sucesso!',
+            token
+        });
+
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).json({
+            mensagem: 'Erro ao realizar login.'
+        });
+    }
 });
 
+     
 
-        app.post('/livros', async (req, res) => {
+
+       app.post('/livros', autenticarToken, async (req, res) => {
     const novoLivro = req.body;
 
     const resultado = await livros.insertOne(novoLivro);
 
     res.json(resultado);
 });
- app.put('/livros/:id', async (req, res) => {
-    const id = req.params.id;
+ app.put('/livros/:id',autenticarToken, async (req, res) =>
+{    const id = req.params.id;
     const novosDados = req.body;
 
     const resultado = await livros.updateOne(
@@ -185,7 +249,7 @@ async function iniciarServidor() {
     res.json(resultado);
 });
 
-app.delete('/livros/:id', async (req, res) => {
+app.delete('/livros/:id', autenticarToken, async (req, res) => {
     const id = req.params.id;
 
     const resultado = await livros.deleteOne(

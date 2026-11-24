@@ -1,0 +1,156 @@
+
+/* Configurações gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Aparência da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f1eb;
+    color: #292929;
+    padding: 40px;
+}
+
+/* Título principal */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f1eb;
+    color: #292929;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+#tela-login,
+#tela-cadastro {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #243447;
+}
+
+p {
+    font-size: 15px;
+    margin-bottom: 20px;
+    color: #666666;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d8d8d8;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #344f6b;
+}
+
+button {
+    background-color: #344f6b;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #243447;
+}
+
+#mostrar-cadastro,
+#voltar-login {
+    background: none;
+    color: #344f6b;
+    padding: 5px;
+    font-weight: bold;
+}
+
+#mostrar-cadastro:hover,
+#voltar-login:hover {
+    text-decoration: underline;
+}
+
+#tela-biblioteca {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+#tela-biblioteca header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#tela-biblioteca section {
+    margin-bottom: 30px;
+}
+
+#tela-biblioteca h2 {
+    margin-bottom: 20px;
+    color: #243447;
+}
+
+#lista-livros {
+    display: grid;
+    gap: 12px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 15px;
+    }
+
+    #tela-login,
+    #tela-cadastro,
+    #tela-biblioteca {
+        padding: 25px;
+    }
+}

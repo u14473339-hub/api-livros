@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
 const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db('api-livros');
 const livros = db.collection('livros');

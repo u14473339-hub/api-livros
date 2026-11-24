@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+      <section id="tela-login">
+
+        <h1>Biblioteca Digital</h1>
+        <p>Entre na sua conta para acessar seus livros.</p>
+
+        <form id="form-login">
+            <input type="email" id="email-login" placeholder="Seu e-mail" required>
+            <input type="password" id="senha-login" placeholder="Sua senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p>
+            Ainda não tem conta?
+            <button id="mostrar-cadastro" type="button">Cadastre-se</button>
+        </p>
+
+    </section>
+
+    <section id="tela-cadastro" hidden>
+
+        <h1>Criar conta</h1>
+
+        <form id="form-cadastro">
+            <input type="text" id="nome-cadastro" placeholder="Seu nome" required>
+            <input type="email" id="email-cadastro" placeholder="Seu e-mail" required>
+            <input type="password" id="senha-cadastro" placeholder="Sua senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <button id="voltar-login" type="button">Voltar para o login</button>
+
+    </section>
+
+    <main id="tela-biblioteca" hidden>
+
+        <header>
+            <h1>Minha Biblioteca</h1>
+            <button id="btn-sair">Sair</button>
+        </header>
+
+        <section>
+
+            <h2>Adicionar livro</h2>
+
+            <form id="form-livro">
+                <input type="text" id="titulo" placeholder="Título do livro" required>
+                <input type="text" id="autor" placeholder="Autor" required>
+                <input type="text" id="genero" placeholder="Gênero" required>
+                <input type="number" id="paginas" placeholder="Número de páginas" required min="1">
+                <button type="submit">Adicionar livro</button>
+            </form>
+
+        </section>
+
+        <section>
+
+            <h2>Livros cadastrados</h2>
+
+            <div id="lista-livros"></div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html> 

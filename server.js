@@ -86,7 +86,7 @@ async function iniciarServidor() {
     res.json(resultado);
 });
         
-        app.get('/usuarios', async (req, res) => {
+        app.get('/usuarios', autenticarToken, async (req, res) => {
             try {
                 const resultado = await usuarios.find(
                     {},
@@ -103,7 +103,7 @@ async function iniciarServidor() {
             }
         });
 
-        app.put('/usuarios/:id', async (req, res) => {
+        app.put('/usuarios/:id', autenticarToken, async (req, res) => {
             try {
                 const id = req.params.id;
                 const { nome, email } = req.body;
@@ -113,6 +113,12 @@ async function iniciarServidor() {
                         mensagem: 'ID inválido.'
                     });
                 }
+
+                if (String(req.usuario.id) !== id) {
+            return res.status(403).json({
+                mensagem: 'Você não tem permissão para editar este usuário.'
+            });
+        }
 
                 if (!nome && !email) {
                     return res.status(400).json({
@@ -149,7 +155,7 @@ async function iniciarServidor() {
                 });
             }
         });
-         app.delete('/usuarios/:id', async (req, res) => {
+         app.delete('/usuarios/:id', autenticarToken, async (req, res) => {
             try {
                 const id = req.params.id;
 
@@ -158,6 +164,12 @@ async function iniciarServidor() {
                         mensagem: 'ID inválido.'
                     });
                 }
+
+                if (String(req.usuario.id) !== id) {
+            return res.status(403).json({
+                mensagem: 'Você não tem permissão para excluir este usuário.'
+            });
+        }
 
                 const resultado = await usuarios.deleteOne({
                     _id: new ObjectId(id)

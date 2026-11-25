@@ -154,3 +154,117 @@ button:hover {
         padding: 25px;
     }
 }
+
+
+body {
+    background-image: url('imagens/fundo-biblioteca.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #1b1424;
+    align-items: flex-start;
+}
+
+#tela-login,
+#tela-cadastro,
+#tela-biblioteca {
+    background: rgba(30, 20, 42, 0.60);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #f5edf8;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+#tela-login h1,
+#tela-cadastro h1,
+#tela-biblioteca h1,
+#tela-biblioteca h2 {
+    color: #e4c9ff;
+}
+
+#tela-login p,
+#tela-cadastro p,
+#tela-biblioteca p {
+    color: #e0d5e8;
+}
+
+input {
+    background-color: rgba(255, 255, 255, 0.94);
+}
+
+button {
+    background-color: #7040a0;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #8957ba;
+}
+
+#mostrar-cadastro,
+#voltar-login {
+    color: #d6aaff;
+}
+
+#lista-livros {
+    display: grid;
+    gap: 16px;
+}
+
+.livro-card {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.livro-card h3 {
+    color: #f0d9ff;
+    margin-bottom: 8px;
+}
+
+.livro-card p {
+    margin-bottom: 8px;
+}
+
+#lista-livros button + button {
+    margin-left: 10px;
+}
+
+
+.livro-card {
+    background: rgba(25, 15, 38, 0.55);
+    border: 1px solid rgba(220, 190, 255, 0.25);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: 0.2s;
+}
+
+.livro-card:hover {
+    background: rgba(45, 27, 65, 0.72);
+    border-color: rgba(220, 190, 255, 0.5);
+}
+
+.livro-card h3 {
+    color: #f0d9ff;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+
+.livro-card p {
+    color: #e0d5e8;
+    margin-bottom: 9px;
+}
+
+.livro-card button {
+    margin-top: 8px;
+    padding: 10px 16px;
+    border-radius: 7px;
+}
+
+#lista-livros button + button {
+    margin-left: 10px;
+}
+

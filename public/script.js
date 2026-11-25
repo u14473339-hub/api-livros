@@ -118,6 +118,7 @@ async function carregarLivros() {
 
         livros.forEach(function(livro) {
     const item = document.createElement('div');
+    item.classList.add('livro-card');
 
     const titulo = document.createElement('h3');
     titulo.textContent = livro.titulo;

@@ -244,22 +244,54 @@ app.post('/login', async (req, res) => {
 
 
        app.post('/livros', autenticarToken, async (req, res) => {
-    const novoLivro = req.body;
+    const novoLivro = {
+        ...req.body,
+        usuarioId: String(req.usuario.id)
+    };
 
     const resultado = await livros.insertOne(novoLivro);
 
     res.json(resultado);
 });
- app.put('/livros/:id',autenticarToken, async (req, res) =>
-{    const id = req.params.id;
+ app.put('/livros/:id',autenticarToken, async (req, res) => { 
+    try {   const id = req.params.id;
+    
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({
+            
+                mensagem: 'ID inválido.'
+        
+            });
+        }
+
     const novosDados = req.body;
 
-    const resultado = await livros.updateOne(
-        { _id: new ObjectId(id) },
+    delete novosDados.usuarioId;
+    delete novosDados._id;
+
+    const resultado = await livros.updateOne( 
+    {
+         _id: new ObjectId(id),
+        usuarioId: String(req.usuario.id)},
         { $set: novosDados }
     );
 
-    res.json(resultado);
+    if (resultado.matchedCount === 0) {
+            return res.status(404).json({
+                mensagem: 'Livro não encontrado.'
+            });
+        }
+
+        res.json({
+            mensagem: 'Livro atualizado com sucesso!'
+        });
+
+    } catch (erro) {
+        console.error(erro);
+        res.status(500).json({
+            mensagem: 'Erro ao atualizar livro.'
+        });
+    }
 });
 
 app.delete('/livros/:id', autenticarToken, async (req, res) => {
